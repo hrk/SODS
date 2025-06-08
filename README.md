@@ -52,10 +52,18 @@ So, i decided create my own library from scratch. The objetive is load and gener
 ### What is the current state?
 Right now you can:
 
-  - Load the cell's values from an ODS file.
-  - Manipulate these values.
-  - Some formating (bold fonts, italic style, underline...).
-  - Save it back to an ODS file.
+- Reading existing ODS files (cell values and structure)
+- Manipulating cell values and sheet layout (create, remove and rename sheets).
+- Applying rich formatting, including:
+    - Bold, italic, and underline styles
+    - Font size and color
+    - Cell background color
+    - Borders
+    - Horizontal and vertical text alignment
+    - Text wrapping
+    - Conditional formatting
+- Apply hashed password protection
+- Writing changes back to a new or existing ODS file
 
 This is an example of an ODS file in LibreOffice
 ![Sample Libreoffice](https://i.imgur.com/avJ8aLw.png)
