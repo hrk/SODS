@@ -19,16 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      
-    - name: Deploy JavaDoc 🚀
-      uses: MathieuSoysal/Javadoc-publisher.yml@v2.4.0
-      with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        javadoc-branch: master
-        java-version: 8
-        target-folder: docs 
-        project: maven
-    
     - name: Set up Maven Central Repository
       uses: actions/setup-java@v1
       with:
@@ -44,7 +34,7 @@ jobs:
       run: mvn versions:set "-DnewVersion=${{ github.event.inputs.releaseversion }}"
       
     - name: Publish toMaven repository
-      run: mvn deploy --batch-mode --no-transfer-progress -P Release
+      run: mvn deploy --batch-mode --no-transfer-progress -P Release -Dgpg.passphrase=${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
       env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
@@ -56,7 +46,7 @@ jobs:
     - uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: Update POM version
-        file_pattern: 'pom.xml README.md'
+        file_pattern: 'docs pom.xml README.md'
         
     - name: Create GitHub Release
       id: create_release
